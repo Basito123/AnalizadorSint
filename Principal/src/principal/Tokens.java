@@ -40,5 +40,13 @@ public enum Tokens {
     ERROR,
     T_dato,
     Espacio,
-    Main
+    Main,
+    DosPuntos,
+    Break,
+    Default,
+    CerrarSwitch,
+    CuerpoSwitch,
+    Switch,
+    Case;
+    
 }

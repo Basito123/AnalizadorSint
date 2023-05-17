@@ -40,6 +40,12 @@ string = "\""[^\"\n]*"\""
 /* Palabra reservada For */
 ( Gfor ) {lexeme=yytext(); return For;}
 
+/*Palabra reservada Switch*/
+( Gswitch ) {lexeme=yytext(); return Switch;}
+
+(Case) {lexeme = yytext();return Case;}
+
+
 /* Operadores logicos */
 ( "&&" | "||" | "!" | "&" | "|" ) {lexeme=yytext(); return Op_logico;}
 

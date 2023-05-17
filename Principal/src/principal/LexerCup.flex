@@ -78,6 +78,12 @@ espacio=[ ,\t,\r,\n]+
 /* Palabra reservada For */
 ( Gfor ) {return new Symbol(sym.For, yychar, yyline, yytext());}
 
+/*Palabra reservada Switch*/
+( Gswitch ) {return new Symbol(sym.Switch, yychar , yyline, yytext());}
+
+/*Case*/
+(Case){return new Symbol(sym.Case, yychar, yyline, yytext());}
+
 /* Punto y coma */
 ( ";" ) {return new Symbol(sym.P_coma, yychar, yyline, yytext());}
 

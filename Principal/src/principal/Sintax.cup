@@ -19,9 +19,9 @@ terminal Linea, Comillas, T_dato, Int, Cadena, If, Else, Do, While, For,
     Igual, Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
     Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c,
     Llave_a, Llave_c, Corchete_a, Corchete_c, Main, P_coma, Identificador,
-    Numero, ERROR;
+    Numero, ERROR, DosPuntos, Break, Default, CerrarSwitch,Switch;
 non terminal INICIO, CuerpoGeneral, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
-    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR;
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR, SWTICH,CuerpoSwitch;
 
 start with INICIO;
 
@@ -61,6 +61,16 @@ IF|
 IF_ELSE
 ;
 
-SWITCH ::= SWITCH Parentesis_a SENTENCIA_SWITCH Parentesis_c Llave_a CuerpoSwitch Llave_c 
+SWITCH ::= Switch Parentesis_a Identificador Parentesis_c Llave_a CuerpoSwitch Llave_c 
+;
 
+CuerpoSwitch ::=
+Case Identificador DosPuntos CuerpoGeneral CerrarSwitch P_coma|
+Case Numero DosPintos CuerpoGeneral CerrarSwitch P_coma|
+;
+
+CerrarSwitch::=
+Break|
+Default|
+;
 //Prueba123

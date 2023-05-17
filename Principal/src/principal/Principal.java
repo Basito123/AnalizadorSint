@@ -211,19 +211,40 @@ public class Principal extends javax.swing.JFrame {
                 case Numero:
                     resultado += "  <Numero>\t\t" + lexer.lexeme + "\n";
                     break;
-                   case NumeroD:
+                case NumeroD:
                     resultado += "  <NumeroD>\t\t" + lexer.lexeme + "\n";
                     break;
                 case ERROR:
                     resultado += "  <Simbolo no definido>\n";
                     break;
+                case DosPuntos:
+                    resultado += "  <Dos Puntos>\t\t" + lexer.lexeme + "\n";
+                    break;
+                case Break:
+                    resultado += "  <Break>\t\t" + lexer.lexeme + "\n";
+                    break;
+                case Default:
+                    resultado += "  <Default>\t\t" + lexer.lexeme + "\n";
+                    break;
+                case CerrarSwitch:
+                    resultado += "  <CerrarSwitch>\t\t" + lexer.lexeme + "\n";
+                    break;
+                case CuerpoSwitch:
+                    resultado += "  <CuerpoSwitch>\t\t" + lexer.lexeme + "\n";
+                    break;
+                case Switch:
+                    resultado += "  <Switch>\t\t" + lexer.lexeme + "\n";
+                    break;  
+                case Case:
+                    resultado+= "<Case>\t\t" + lexer.lexeme + "\n";
+                    break;  
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
                     break;
             }
         }       
      }
-      
+    
      
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         try {
