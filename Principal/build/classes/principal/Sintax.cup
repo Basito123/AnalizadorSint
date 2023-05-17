@@ -1,0 +1,66 @@
+package principal;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, Comillas, T_dato, Int, Cadena, If, Else, Do, While, For,
+    Igual, Suma, Resta, Multiplicacion, Division, Op_logico, Op_relacional,
+    Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Corchete_a, Corchete_c, Main, P_coma, Identificador,
+    Numero, ERROR;
+non terminal INICIO, CuerpoGeneral, DECLARACION, DECLARACION_FOR, IF, IF_ELSE,
+    WHILE, DO_WHILE, FOR, SENTENCIA_BOOLEANA, SENTENCIA_FOR;
+
+start with INICIO;
+
+INICIO ::= 
+    Main Llave_a CuerpoGeneral Llave_c
+;
+
+DECLARACION ::= 
+    Int Identificador P_coma | 
+    Int Identificador Igual Numero P_coma |
+    T_dato Identificador P_coma |
+    T_dato Identificador Igual Numero P_coma | 
+    Cadena Identificador Igual Comillas Comillas P_coma |
+    Cadena Identificador Igual Comillas Identificador Comillas P_coma |
+;
+SENTENCIA_BOOLEANA ::= 
+    Identificador Op_relacional Numero |
+    Identificador Op_relacional Identificador |
+;
+FOR ::= For Parentesis_a SENTENCIA_FOR Parentesis_c Llave_a CuerpoGeneral Llave_c
+;
+SENTENCIA_FOR ::=
+    T_dato Identificador Igual Numero P_coma SENTENCIA_BOOLEANA P_coma DECLARACION_FOR |
+    Identificador Igual Numero P_coma SENTENCIA_BOOLEANA P_coma DECLARACION_FOR
+;
+IF ::= If Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a CuerpoGeneral Llave_c
+;
+DECLARACION_FOR ::= 
+    Identificador Op_incremento | 
+;
+IF_ELSE ::= IF Else Llave_a CuerpoGeneral Llave_c
+;
+CuerpoGeneral ::=
+FOR |
+DECLARACION |
+IF|
+IF_ELSE
+;
+
+SWITCH ::= SWITCH Parentesis_a SENTENCIA_SWITCH Parentesis_c Llave_a CuerpoSwitch Llave_c 
+
+//Prueba123
