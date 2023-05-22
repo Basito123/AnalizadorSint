@@ -58,8 +58,7 @@ CuerpoGeneral ::=
 FOR |
 DECLARACION |
 IF|
-IF_ELSE|
-SWITCH
+IF_ELSE
 ;
 
 SWITCH ::= Switch Parentesis_a Identificador Parentesis_c Llave_a CuerpoSwitch Llave_c 

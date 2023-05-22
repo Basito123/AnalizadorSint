@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.io.StringReader;
 import java_cup.runtime.Symbol;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 public class Principal extends javax.swing.JFrame {
+    public int i = 0;
     private JPanel contentPane;
     public Principal() {
         initComponents();
@@ -25,6 +28,9 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btnGenerar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TablaSimbolos = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtArchivo = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -58,7 +64,19 @@ public class Principal extends javax.swing.JFrame {
                 btnGenerarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 350, -1));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 350, 50));
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Tabla de Simbolos");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, -1, -1));
+
+        TablaSimbolos.setColumns(20);
+        TablaSimbolos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        TablaSimbolos.setRows(5);
+        jScrollPane5.setViewportView(TablaSimbolos);
+
+        getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 350, 140));
 
         txtArchivo.setColumns(20);
         txtArchivo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -72,7 +90,7 @@ public class Principal extends javax.swing.JFrame {
         Sintactico.setRows(5);
         jScrollPane1.setViewportView(Sintactico);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 350, 310));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 350, 80));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/G2.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
@@ -85,7 +103,8 @@ public class Principal extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 350, 310));
 
-        AnalizarSin.setText("ANALIZAR SIN");
+        AnalizarSin.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        AnalizarSin.setText("ANALIZAR SINTATICO");
         AnalizarSin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AnalizarSinActionPerformed(evt);
@@ -95,7 +114,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/principal/111449.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 530));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 520));
 
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -119,16 +138,19 @@ public class Principal extends javax.swing.JFrame {
      public void analizadorLexico() throws IOException{
         int cont = 1;
         
+        String[]  ArregloSimbolos = new String[10];
         String expr = (String) txtArchivo.getText();
         Lexer lexer = new Lexer(new StringReader(expr));
         String resultado = "LINEA " + cont + "\t\tSIMBOLO\n";
+        String resultado2 = "";
         while (true) {
             Tokens token = lexer.yylex();
             if (token == null) {
                 txtResultado1.setText(resultado);
+                TablaSimbolos.setText(resultado2);
                 return;
             }
-            switch (token) {
+            /*switch (token) {
                 case Linea:
                     cont++;
                     resultado += "LINEA " + cont + "\n";
@@ -206,7 +228,18 @@ public class Principal extends javax.swing.JFrame {
                     resultado += "  <Punto y coma>\t" + lexer.lexeme + "\n";
                     break;
                 case Identificador:
-                    resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
+                    
+                    for (int j = 0; j < ArregloSimbolos.length; j++){
+                        if (ArregloSimbolos[j] == lexer.toString()){
+                            JOptionPane.showMessageDialog(null, "SIMBOLO REPETIDO");
+                        } else {
+                            ArregloSimbolos[i] = lexer.lexeme;
+                            i++;
+                            System.out.println(ArregloSimbolos[i]);
+                            System.out.println("A");
+                        }
+                    }  
+                    resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";                            
                     break;
                 case Numero:
                     resultado += "  <Numero>\t\t" + lexer.lexeme + "\n";
@@ -241,9 +274,179 @@ public class Principal extends javax.swing.JFrame {
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
                     break;
+            }*/
+            if (token.toString() == "Linea"){
+                cont++;
+                resultado += "LINEA " + cont + "\n";
+            }
+            
+            if (token.toString() == "Comillas"){
+                resultado += "  <Comillas>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Cadena"){
+                resultado += "  <Cadena>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "T_dato"){
+                resultado += "  <Tipo de Dato>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "If"){
+                resultado += "  <Reservada if>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Else"){
+                resultado += "  <Reservada else>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Do"){
+                resultado += "  <Reservada do>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "While"){
+                resultado += "  <Reservada while>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "For"){
+                resultado += "  <Reservada for>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Igual"){
+                resultado += "  <Operador igual>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Suma"){
+                resultado += "  <Operador suma>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Resta"){
+                resultado += "  <Operador resta>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Multiplicacion"){
+                resultado += "  <Operador multiplicacion>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Division"){
+                resultado += "  <Operador division>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Op_logico"){
+                resultado += "  <Operador logico>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Op_incremento"){
+                resultado += "  <Operador incremento>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Op_relacional"){
+                resultado += "  <Operador relacional>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Op_atribucion"){
+                resultado += "  <Operador atribucion>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Op_booleano"){
+                resultado += "  <Operador booleano>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Parentesis_a"){
+                resultado += "  <Parentesis de apertura>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Parentesis_c"){
+                resultado += "  <Parentesis de cierre>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Llave_a"){
+                resultado += "  <Llave de apertura>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Llave_c"){
+                resultado += "  <Llave de cierre>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Main"){
+                resultado += "  <Reservada main>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "P_coma"){
+                resultado += "  <Punta y coma>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Identificador"){
+                /*for (int j = 0; j < ArregloSimbolos.length; j++){
+                        if (ArregloSimbolos[j] == lexer.toString()){
+                            JOptionPane.showMessageDialog(null, "SIMBOLO REPETIDO");
+                        } else {
+                            ArregloSimbolos[i] = lexer.lexeme;
+                            i++;
+                            System.out.println(ArregloSimbolos[i]);
+                            System.out.println("A");
+                        }
+                } */
+                resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
+                //for (int j = 0; j <= 10; j++) {
+                //    if (ArregloSimbolos[j] == lexer.lexeme) {
+                //        System.out.println("REPETIDO");
+                //    } else {
+                        ArregloSimbolos[i] = lexer.lexeme;
+                        System.out.println(ArregloSimbolos[i]);
+                        resultado2 += ArregloSimbolos[i] + "\n";
+                        i++;
+                //    }
+                //}
+                
+                
+            }
+            
+            if (token.toString() == "Numero"){
+                resultado += "  <Numero>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "NumeroD"){
+                resultado += "  <NumeroD>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "ERROR"){
+                resultado += "  <Simbolo no definido>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "DosPuntos"){
+                resultado += "  <Dos Puntos>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Break"){
+                resultado += "  <Break>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Default"){
+                resultado += "  <Default>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "CerrarSwitch"){
+                resultado += "  <CerrarSwitch>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "CuerpoSwitch"){
+                resultado += "  <CuerpoSwitch>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Switch"){
+                resultado += "  <Switch>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            if (token.toString() == "Case"){
+                resultado += "  <Case>\t\t" + lexer.lexeme + "\n";
+            }
+            
+            else {
+                resultado += "  < " + lexer.lexeme + " >\n";
             }
         }       
-     }
+    }
     
      
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
@@ -311,10 +514,12 @@ if(seleccion==JFileChooser.APPROVE_OPTION){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AnalizarSin;
     private javax.swing.JTextArea Sintactico;
+    private javax.swing.JTextArea TablaSimbolos;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
@@ -323,6 +528,7 @@ if(seleccion==JFileChooser.APPROVE_OPTION){
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea txtArchivo;
     private javax.swing.JTextArea txtResultado1;
