@@ -37,6 +37,8 @@ DECLARACION ::=
     Cadena Identificador Igual Comillas Comillas P_coma |
     Cadena Identificador Igual Comillas Identificador Comillas P_coma |
 ;
+
+
 SENTENCIA_BOOLEANA ::= 
     Identificador Op_relacional Numero |
     Identificador Op_relacional Identificador |

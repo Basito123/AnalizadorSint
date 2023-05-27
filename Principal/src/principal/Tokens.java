@@ -22,6 +22,7 @@ public enum Tokens {
     Numero,
     Terminador,
     Tabular,
+    Int,
     If,
     Else,
     Do,

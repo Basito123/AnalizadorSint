@@ -27,7 +27,7 @@ espacio=[ ,\t,\r,\n]+
 /* Comentarios */
 ( "//"(.)* ) {/*Ignore*/}
 /* Tipos de datos */
-( Gbyte | Gchar | Glong | Gfloat | Gdouble ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
+( Gint |Gbyte | Gchar | Glong | Gfloat | Gdouble ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
 
 ( Gstring ) {return new Symbol(sym.Cadena, yychar, yyline, yytext());}
 
